@@ -143,7 +143,7 @@ const VoxelDog = () => {
         return () => {
             refInitialized.current = false;
         };
-    }, [])
+    }, [initialCameraPosition, renderer, scene, target])
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);

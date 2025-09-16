@@ -12,6 +12,7 @@ const VoxelDog = () => {
     const refContainer = useRef();
     const refInitialized = useRef(false);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
     const [renderer, setRenderer] = useState();
     const [_camera, setCamera] = useState();
     const [target] = useState(new THREE.Vector3(-0.5, 1.2, 0));
@@ -111,8 +112,13 @@ const VoxelDog = () => {
                 receiveShadow: false,
                 castShadow: false
             }).then(() => {
+                console.log('3D model loaded successfully');
                 animate();
                 setLoading(false);
+            }).catch((error) => {
+                console.error('Error loading 3D model:', error);
+                setLoading(false);
+                setError(true);
             });
 
             return () => {
@@ -177,6 +183,18 @@ const VoxelDog = () => {
                     ml="calc(0px - var(--spinner-size) / 2)" 
                     mt="calc(0px - var(--spinner-size))"
                 />
+            )}
+            {error && (
+                <Box 
+                    position='relative' 
+                    left='50%' 
+                    top='50%' 
+                    transform='translate(-50%, -50%)'
+                    textAlign='center'
+                    color='gray.500'
+                >
+                    3D Model unavailable
+                </Box>
             )}
         </Box>
     )

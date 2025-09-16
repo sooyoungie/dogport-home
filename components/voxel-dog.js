@@ -28,6 +28,8 @@ const VoxelDog = () => {
     // const [mixer, setMixer] = useState();
 
     const handleWindowResize = useCallback(() => {
+        if (typeof window === 'undefined') return;
+        
         const { current: container } = refContainer;
         if (container && renderer) {
             const scW = container.clientWidth;
@@ -37,6 +39,9 @@ const VoxelDog = () => {
     }, [renderer]);
 
     useEffect(() => {
+        // Ensure we're on client-side
+        if (typeof window === 'undefined') return;
+        
         const { current: container } = refContainer;
         if (container && !renderer && !refInitialized.current) {
             refInitialized.current = true;

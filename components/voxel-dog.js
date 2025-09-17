@@ -12,7 +12,6 @@ const VoxelDog = () => {
     const refContainer = useRef();
     const refInitialized = useRef(false);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [renderer, setRenderer] = useState();
     const [_camera, setCamera] = useState();
     const [target] = useState(new THREE.Vector3(-0.5, 1.2, 0));
@@ -29,8 +28,6 @@ const VoxelDog = () => {
     // const [mixer, setMixer] = useState();
 
     const handleWindowResize = useCallback(() => {
-        if (typeof window === 'undefined') return;
-        
         const { current: container } = refContainer;
         if (container && renderer) {
             const scW = container.clientWidth;
@@ -40,9 +37,6 @@ const VoxelDog = () => {
     }, [renderer]);
 
     useEffect(() => {
-        // Ensure we're on client-side
-        if (typeof window === 'undefined') return;
-        
         const { current: container } = refContainer;
         if (container && !renderer && !refInitialized.current) {
             refInitialized.current = true;
@@ -112,13 +106,8 @@ const VoxelDog = () => {
                 receiveShadow: false,
                 castShadow: false
             }).then(() => {
-                console.log('3D model loaded successfully');
                 animate();
                 setLoading(false);
-            }).catch((error) => {
-                console.error('Error loading 3D model:', error);
-                setLoading(false);
-                setError(true);
             });
 
             return () => {
@@ -154,7 +143,7 @@ const VoxelDog = () => {
         return () => {
             refInitialized.current = false;
         };
-    }, [initialCameraPosition, renderer, scene, target])
+    }, [])
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
@@ -183,18 +172,6 @@ const VoxelDog = () => {
                     ml="calc(0px - var(--spinner-size) / 2)" 
                     mt="calc(0px - var(--spinner-size))"
                 />
-            )}
-            {error && (
-                <Box 
-                    position='relative' 
-                    left='50%' 
-                    top='50%' 
-                    transform='translate(-50%, -50%)'
-                    textAlign='center'
-                    color='gray.500'
-                >
-                    3D Model unavailable
-                </Box>
             )}
         </Box>
     )

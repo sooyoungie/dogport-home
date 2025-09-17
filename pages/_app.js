@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import { ChakraProvider } from "@chakra-ui/react";
-=======
->>>>>>> aw/0.0.1
 import Layout from "../components/layouts/main";
 import Fonts from "../components/fonts";
 import { AnimatePresence } from "framer-motion";

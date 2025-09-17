@@ -1,6 +1,10 @@
 import NextLink from "next/link";
 import Image from "next/image";
 import { Box, Text } from "@chakra-ui/react";
+<<<<<<< HEAD
+=======
+// import { Global } from "@emotion/react";
+>>>>>>> aw/0.0.1
 
 export const GridItem = ({ children, href, title, thumbnail }) => (
     <Box 
